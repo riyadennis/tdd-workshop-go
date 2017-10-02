@@ -15,5 +15,5 @@ type MarksInteger interface {
 
 	Multiply(integer MarksInteger) MarksInteger
 
-	DivideBy(integer MarksInteger) MarksInteger
+	//DivideBy(integer MarksInteger) MarksInteger
 }

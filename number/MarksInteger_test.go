@@ -24,8 +24,8 @@ func TestRiyaInt_GetNative(t *testing.T) {
 }
 
 func TestRiyaInt_IsEqualTo(t *testing.T) {
-	r := newRiya(1)
-	if r.IsEqualTo(1) != true {
+	r := newRiya(10)
+	if r.IsEqualTo(10) != true {
 		t.Error("Failed")
 	}
 

@@ -1,2 +1,0 @@
-# tdd-workshop-go
-TODO

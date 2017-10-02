@@ -67,18 +67,15 @@ func TestRiyaInt_Add(t *testing.T) {
 func TestRiyaInt_Subtract(t *testing.T) {
 	thirtyFive := newRiya(35)
 	ten := newRiya(10)
-	twentyFive := thirtyFive.Subtract(ten)
+	twentyFive := thirtyFive.Subtract(ten).GetNative()
 
 	if ten.GetNative() != 10 {
-		t.Error("Failed")
+		t.Error("Failed 10")
 	}
-	if thirtyFive.GetNative() != 35 {
-		t.Error("Failed")
+	if twentyFive != 25 {
+		t.Error("Failed 35")
 	}
 
-	if twentyFive.GetNative() != 25 {
-		t.Error("Failed")
-	}
 }
 func TestRiyaInt_Multiply(t *testing.T) {
 	thirtyFive := newRiya(35)
@@ -95,35 +92,30 @@ func TestRiyaInt_Multiply(t *testing.T) {
 		t.Error("Failed")
 	}
 }
-//
-//func TestRiyaInt_DivideBy(t *testing.T) {
-//	thirtyFive := newRiya(35)
-//	if thirtyFive.num != 35 {
-//		t.Error("Failed")
-//	}
-//	ten := newRiya(10)
-//	if ten.num != 10 {
-//		t.Error("Failed")
-//	}
-//	three, err := thirtyFive.DivideBy(ten)
-//	if err != nil {
-//		t.Error(err.Error())
-//	}
-//	if three.num != 3 {
-//		t.Error("Failed")
-//	}
-//
-//	fiftyFive := newRiya(55)
-//	if fiftyFive.num != 55 {
-//		t.Error("Failed")
-//	}
-//	zero := newRiya(0)
-//	if zero.num != 0 {
-//		t.Error("Failed")
-//	}
-//	_, err = fiftyFive.DivideBy(zero)
-//	if err == nil {
-//		t.Error("Expects an error")
-//	}
-//
-//}
+
+func TestRiyaInt_DivideBy(t *testing.T) {
+	thirtyFive := newRiya(35)
+	if thirtyFive.GetNative() != 35 {
+		t.Error("Failed")
+	}
+	five := newRiya(5)
+	seven, err := thirtyFive.DivideBy(five)
+	if err != nil {
+		t.Errorf("Error occured during division %s", err.Error())
+	}
+	if seven.GetNative() != 7 {
+		t.Error("Failed")
+	}
+}
+
+func TestRiyaInt_DivideByZero(t *testing.T) {
+	thirty := newRiya(30)
+	if thirty.GetNative() != 30 {
+		t.Error("Failed")
+	}
+	zero := newRiya(0)
+	_, err := thirty.DivideBy(zero)
+	if err == nil {
+		t.Error("Expected error didnt  occur during division")
+	}
+}

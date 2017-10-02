@@ -42,11 +42,11 @@ func (r *RiyaInt) Multiply(integer MarksInteger) (MarksInteger){
 }
 
 func (r *RiyaInt) DivideBy(integer MarksInteger) (MarksInteger, error){
-	if integer.GetNative() != 0 {
-		r.num = r.num / integer.GetNative()
-		return r, nil
+	if integer.GetNative() == 0 {
+		r.num = 0
+		return nil, fmt.Errorf("Error cant divide by %v", integer.GetNative() )
 	}
-	err := fmt.Errorf("Cant divide by zero")
-	rR := &RiyaInt{}
-	return rR, err
+	divide  := new(RiyaInt)
+	divide.num = r.num / integer.GetNative()
+	return divide, nil
 }

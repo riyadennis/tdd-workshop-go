@@ -23,7 +23,7 @@ func TestCreateRandomNumberContainsNameLetters(t *testing.T){
 	l := new(LicenseNumberGenerator)
 	l.person = *p
 
-	randomString := l.createLicenceNumber(14)
+	randomString := l.CreateLicenceNumber(14)
 	if strings.Contains(randomString,  "MDB") == false {
 		t.Error("No string returned")
 	}
@@ -37,7 +37,7 @@ func TestCreateRandomNumberTest(t *testing.T){
 	l := new(LicenseNumberGenerator)
 	l.person = *p
 
-	randomString := l.createLicenceNumber(14)
+	randomString := l.CreateLicenceNumber(14)
 
 	if len(randomString) < 6 {
 		t.Error("No random number attache")
@@ -52,7 +52,7 @@ func TestCreateStringFromDOB(t *testing.T){
 	l := new(LicenseNumberGenerator)
 	l.person = *p
 
-	randomString := l.createLicenceNumber(14)
+	randomString := l.CreateLicenceNumber(14)
 
 	if len(randomString) != 14 {
 		t.Error("No random number attached")
@@ -66,7 +66,7 @@ func TestCreateStringForDifferentPerson(t *testing.T){
 	l := new(LicenseNumberGenerator)
 	l.person = *p
 
-	randomString := l.createLicenceNumber(15)
+	randomString := l.CreateLicenceNumber(15)
 
 	if len(randomString) != 15 {
 		t.Error("No random number attached")

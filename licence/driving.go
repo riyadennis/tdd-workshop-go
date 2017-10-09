@@ -12,15 +12,15 @@ type Person struct {
 	dateOfBirth string
 }
 type LicenseNumberGenerator struct {
-	person             Person
+	person        Person
 	licenseNumber RandomNumberGenerator
 }
 type RandomNumberGenerator interface {
 	// returns a string as number can be 0
-	createRandomNumber(numberOfDigits int) string
+	CreateRandomNumber(numberOfDigits int) string
 }
 
-func (l LicenseNumberGenerator) createLicenceNumber(numberOfDigits int) (string) {
+func (l LicenseNumberGenerator) CreateLicenceNumber(numberOfDigits int) (string) {
 	return l.person.createRandomNumber(numberOfDigits)
 }
 

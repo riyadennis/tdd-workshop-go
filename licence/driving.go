@@ -9,7 +9,7 @@ import (
 
 type Person struct {
 	name        string
-	dateOfBirth string
+	dateOfBirth time.Time
 }
 type LicenseNumberGenerator struct {
 	person        Person
@@ -25,13 +25,13 @@ func (l LicenseNumberGenerator) CreateLicenceNumber(numberOfDigits int) (string)
 }
 
 func (p Person) createRandomNumber(numberOfDigits int) string {
-	var fl, dob string
+	var fl string
+	var dob string
 	var randomNum int
 
-	fl = getFirstLettersFromName(p.name)
+	fl = p.getFirstLettersFromName()
 	dob = generateDigitsFromDate(p.dateOfBirth)
-	randomNum = createRandomDigits(100, 999)
-
+	randomNum = CreateRandomDigits(10000, 99999)
 	str := fmt.Sprintf("%s%d%s", fl, randomNum, dob)
 	if len(str) == numberOfDigits {
 		return str
@@ -39,8 +39,8 @@ func (p Person) createRandomNumber(numberOfDigits int) string {
 	return ""
 }
 
-func getFirstLettersFromName(name string) (string) {
-	names := strings.Split(name, " ")
+func (p Person) getFirstLettersFromName() (string) {
+	names := strings.Split(p.name, " ")
 	var f string
 	for _, n := range names {
 		f += string([]rune(n)[0])
@@ -48,10 +48,11 @@ func getFirstLettersFromName(name string) (string) {
 	return f
 }
 
-func createRandomDigits(min, max int) int {
+func CreateRandomDigits(min, max int) int {
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(max-min) + min
 }
-func generateDigitsFromDate(date string) (string) {
-	return date
+func generateDigitsFromDate(date time.Time) (string) {
+	dates := strings.Split(date.String(), "-")
+	return dates[0]+dates[1]
 }

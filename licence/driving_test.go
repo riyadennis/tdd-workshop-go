@@ -2,6 +2,7 @@ package licence
 import (
 	"testing"
 	"strings"
+	"time"
 )
 // Please implement a scruct that can produce driving licence numbers using TDD.
 //
@@ -18,12 +19,12 @@ import (
 
 func TestCreateRandomNumberContainsNameLetters(t *testing.T){
 	p := new(Person)
-	p.dateOfBirth = "19970512"
+	p.dateOfBirth = time.Date(1997, time.May, 12, 00, 00, 00, 000, time.UTC)
 	p.name = "Mark David Bradley"
 	l := new(LicenseNumberGenerator)
 	l.person = *p
 
-	randomString := l.CreateLicenceNumber(14)
+	randomString := p.getFirstLettersFromName()
 	if strings.Contains(randomString,  "MDB") == false {
 		t.Error("No string returned")
 	}
@@ -31,22 +32,22 @@ func TestCreateRandomNumberContainsNameLetters(t *testing.T){
 
 func TestCreateRandomNumberTest(t *testing.T){
 	p := new(Person)
-	p.dateOfBirth = "19970512"
+	p.dateOfBirth = time.Date(1997, time.November, 9, 00, 00, 00, 000, time.UTC)
 	p.name = "Mark David Bradley"
 
 	l := new(LicenseNumberGenerator)
 	l.person = *p
 
-	randomString := l.CreateLicenceNumber(14)
+	randomInteger := CreateRandomDigits(10000, 99999)
 
-	if len(randomString) < 6 {
-		t.Error("No random number attache")
+	if randomInteger < 10000 && randomInteger > 99999 {
+		t.Error("Invalid random number generated")
 	}
 }
 
 func TestCreateStringFromDOB(t *testing.T){
 	p := new(Person)
-	p.dateOfBirth = "19970512"
+	p.dateOfBirth = time.Date(1985, time.May, 12, 00, 00, 00, 000, time.UTC)
 	p.name = "Mark David Bradley"
 
 	l := new(LicenseNumberGenerator)
@@ -60,7 +61,7 @@ func TestCreateStringFromDOB(t *testing.T){
 }
 func TestCreateStringForDifferentPerson(t *testing.T){
 	p := new(Person)
-	p.dateOfBirth = "19851009"
+	p.dateOfBirth = time.Date(1997, time.May, 12, 00, 00, 00, 000, time.UTC)
 	p.name = "Harry Jim James Smith"
 
 	l := new(LicenseNumberGenerator)

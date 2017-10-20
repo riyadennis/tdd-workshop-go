@@ -2,48 +2,64 @@ package main
 
 import (
 	"fmt"
-	"database/sql"
-	"log"
 	_ "github.com/lib/pq"
 )
 
-type DBConnection struct {
-	Host string
-	Port string
-	Name string
-	User string
-	Pass string
+type Terrain struct {
+	config Config
 }
 type Config struct {
-	DB DBConnection
+	Name    string
+	Country string
 }
 
-func CreateConnection(c *Config) {
-	dbInfo := fmt.Sprintf(
-		"user=%s password=%s dbname=%s sslmode=disable",
-		c.DB.User, c.DB.Pass, c.DB.Name)
-	dbConn, err := sql.Open("postgres", dbInfo)
-	if err != nil {
-		log.Println("failed opening database:", err)
-	}
-	fmt.Println(dbConn)
+type Option interface {
+	Apply(*Config)
 }
 
-func AnotherFunc(c *Config) {
-	fmt.Println(c.DB)
+type WithSplines struct {
+	config Config
 }
 
-func NewConfig(options ...func(*Config)) {
-	c := &Config{
-		DBConnection{"localhost", "8080", "dbName", "User", "Pass"},
-	}
-	for _, option := range options {
-		option(c)
+func WithReticulatedSplines() Option {
+	return new(WithSplines)
+}
+func (w *WithSplines) Apply(c *Config) {
+	fmt.Println(w.config.Country)
+}
+
+type WithOutSpline struct {
+	config Config
+}
+
+func WithOutReticulateSpline() Option {
+	return new(WithOutSpline)
+}
+func (w WithOutSpline) Apply(c *Config) {
+	fmt.Println(w.config.Country)
+}
+
+type WithCity struct {
+	config Config
+}
+
+func WithCities() Option {
+	return new(WithCity)
+}
+func (w *WithCity) Apply(c *Config) {
+	fmt.Println(w.config.Country)
+}
+
+func NewTerrain(options ...Option) {
+	var t Terrain
+	t.config.Name = "London"
+	t.config.Country = "UK"
+	for _, opt := range options {
+		opt.Apply(&t.config)
 	}
 
 }
 
 func main() {
-	NewConfig(CreateConnection)
-	NewConfig(AnotherFunc)
+	NewTerrain(WithCities(), WithReticulatedSplines(), WithOutReticulateSpline())
 }

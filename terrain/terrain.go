@@ -43,10 +43,13 @@ func (w WithOutSpline) Apply(c *Config) {
 
 type WithCity struct {
 	config Config
+	Cities int
 }
 
-func WithCities() Option {
-	return new(WithCity)
+func WithCities(n int) Option {
+	return &WithCity{
+		Cities:n,
+	}
 }
 func (w *WithCity) Apply(c *Config) {
 	w.config = *c
@@ -64,5 +67,5 @@ func NewTerrain(options ...Option) {
 }
 
 func main() {
-	NewTerrain(WithCities(), WithReticulatedSplines(), WithOutReticulateSpline())
+	NewTerrain(WithCities(7), WithReticulatedSplines(), WithOutReticulateSpline())
 }

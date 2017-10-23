@@ -25,7 +25,8 @@ func WithReticulatedSplines() Option {
 	return new(WithSplines)
 }
 func (w *WithSplines) Apply(c *Config) {
-	fmt.Println(w.config.Country)
+	w.config = *c
+	fmt.Println(w)
 }
 
 type WithOutSpline struct {
@@ -36,7 +37,8 @@ func WithOutReticulateSpline() Option {
 	return new(WithOutSpline)
 }
 func (w WithOutSpline) Apply(c *Config) {
-	fmt.Println(w.config.Country)
+	w.config = *c
+	fmt.Println(w)
 }
 
 type WithCity struct {
@@ -47,7 +49,8 @@ func WithCities() Option {
 	return new(WithCity)
 }
 func (w *WithCity) Apply(c *Config) {
-	fmt.Println(w.config.Country)
+	w.config = *c
+	fmt.Println(w)
 }
 
 func NewTerrain(options ...Option) {

@@ -2,47 +2,46 @@ package main
 
 import (
 	"fmt"
-	_ "github.com/lib/pq"
 )
 
 type Terrain struct {
-	config Config
+	config TerrainConfig
 }
-type Config struct {
+type TerrainConfig struct {
 	Name    string
 	Country string
 }
 
 type Option interface {
-	Apply(*Config)
+	Apply(*TerrainConfig)
 }
 
 type WithSplines struct {
-	config Config
+	config TerrainConfig
 }
 
 func WithReticulatedSplines() Option {
 	return new(WithSplines)
 }
-func (w *WithSplines) Apply(c *Config) {
+func (w *WithSplines) Apply(c *TerrainConfig) {
 	w.config = *c
 	fmt.Println(w)
 }
 
 type WithOutSpline struct {
-	config Config
+	config TerrainConfig
 }
 
 func WithOutReticulateSpline() Option {
 	return new(WithOutSpline)
 }
-func (w WithOutSpline) Apply(c *Config) {
+func (w WithOutSpline) Apply(c *TerrainConfig) {
 	w.config = *c
 	fmt.Println(w)
 }
 
 type WithCity struct {
-	config Config
+	config TerrainConfig
 	Cities int
 }
 
@@ -51,7 +50,7 @@ func WithCities(n int) Option {
 		Cities:n,
 	}
 }
-func (w *WithCity) Apply(c *Config) {
+func (w *WithCity) Apply(c *TerrainConfig) {
 	w.config = *c
 	fmt.Println(w)
 }

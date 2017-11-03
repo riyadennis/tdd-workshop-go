@@ -18,4 +18,6 @@ type Config struct {
 type ConfigOption interface {
 	ApplyConfig(*Config)
 }
+func NewConfig(){
 
+}

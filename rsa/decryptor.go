@@ -12,22 +12,20 @@ type MessageDecryptor struct {
 	Hash       hash.Hash
 	Reader     io.Reader
 	PrivateKey rsa.PrivateKey
-	label      []byte
 }
 
 func (md MessageDecryptor) DecryptMessage(message []byte) ([]byte, error) {
-	decryptedMessage, error := rsa.DecryptOAEP(md.Hash, md.Reader, &md.PrivateKey, message, md.label)
+	decryptedMessage, error := rsa.DecryptPKCS1v15(md.Reader, &md.PrivateKey, message)
 	if error != nil {
 		return nil, error
 	}
 	return decryptedMessage, nil
 }
 
-func NewMessageDecryptor(PrivatKey rsa.PrivateKey, label []byte) (*MessageDecryptor) {
+func NewMessageDecryptor(PrivatKey rsa.PrivateKey) (*MessageDecryptor) {
 	return &MessageDecryptor{
 		Hash:       sha256.New(),
 		PrivateKey: PrivatKey,
 		Reader:     rand.Reader,
-		label:      label,
 	}
 }

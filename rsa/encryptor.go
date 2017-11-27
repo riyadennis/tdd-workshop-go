@@ -14,24 +14,20 @@ type Encryptor interface {
 type MessageEncryptor struct {
 	Hash      hash.Hash
 	PublicKey *rsa.PublicKey
-	Label     []byte
 }
 
-func NewMessageEncryptor(PublicKey *rsa.PublicKey, label []byte) (*MessageEncryptor) {
+func NewMessageEncryptor(PublicKey *rsa.PublicKey) (*MessageEncryptor) {
 	return &MessageEncryptor{
 		Hash:      sha256.New(),
 		PublicKey: PublicKey,
-		Label:     label,
 	}
 }
 
 func (me MessageEncryptor) EncryptMessage(message string) ([]byte, error) {
-	enMessage, error := rsa.EncryptOAEP(
-		me.Hash,
+	enMessage, error := rsa.EncryptPKCS1v15(
 		rand.Reader,
 		me.PublicKey,
 		[]byte(message),
-		me.Label,
 	)
 	if error != nil {
 		return nil, error

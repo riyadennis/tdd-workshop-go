@@ -12,14 +12,15 @@ func main() {
 	if err != nil {
 		logrus.Fatalf("Unable to generate the key %s", err.Error())
 	}
-	label := []byte("label")
 	message := "apikey:jjje:hh"
-	messgeEnc := NewMessageEncryptor(&key.PublicKey, label)
+
+	messgeEnc := NewMessageEncryptor(&key.PublicKey)
 	em, err := messgeEnc.EncryptMessage(message)
 	if err != nil {
 		logrus.Fatalf("Unable to generate the key %s", err.Error())
 	}
-	decrp := NewMessageDecryptor(*key, label)
+
+	decrp := NewMessageDecryptor(*key)
 	dm, err := decrp.DecryptMessage(em)
 	if err != nil {
 		logrus.Fatalf("Unable to generate the key %s", err.Error())
